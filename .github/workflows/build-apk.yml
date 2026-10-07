@@ -16,6 +16,23 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install NDK and CMake
+        run: |
+          sdkmanager "ndk;29.0.14206865" "cmake;4.1.2"
+
+      - name: Fetch sherpa-onnx native libs
+        run: |
+          chmod +x tools/fetch-sherpa-onnx.sh
+          tools/fetch-sherpa-onnx.sh
+
+      - name: Build Bergamot native lib
+        run: |
+          chmod +x tools/bergamot/build-android.sh
+          tools/bergamot/build-android.sh
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
